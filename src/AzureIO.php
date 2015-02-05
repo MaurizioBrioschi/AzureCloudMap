@@ -34,7 +34,7 @@ class AzureIO extends AzureMapping {
      * @param string $dir the container
      * @return array
      */
-    public function scandir(string $dir) {
+    public function scandir($dir) {
         try {
             $blob_list = $this->blobRestProxy->listBlobs($dir);
             $blobs = $blob_list->getBlobs();
@@ -55,7 +55,7 @@ class AzureIO extends AzureMapping {
      * @param type $file is the blob
      * @return boolean
      */
-    public function unlink(string $dir, $file) {
+    public function unlink($dir, $file) {
         try {
             $this->blobRestProxy->deleteBlob($dir, $file);
         } catch (ServiceException $e) {
@@ -67,7 +67,7 @@ class AzureIO extends AzureMapping {
      * @param string $dir the container
      * @return boolean
      */
-    public function rmdir(string $dir) {
+    public function rmdir($dir) {
         try {
             // Delete container.
             $this->blobRestProxy->deleteContainer($dir);
@@ -84,7 +84,7 @@ class AzureIO extends AzureMapping {
      * @param type $local_file 
      * @return boolean
      */
-    public function copy(string $dest_dir, string $dest_blob, string $local_file) {
+    public function copy($dest_dir, $dest_blob, string $local_file) {
         $content = fopen($local_file, "r");
         try {
             //Upload blob
