@@ -44,12 +44,16 @@ now you can use:
  * @return boolean
  */
 public function download($dir, $file, $destinationFilename)
+```
+```
 /**
  * List files and directories inside the specified container
  * @param string $dir the container
  * @return array
  */
 public function scandir(string $dir)
+```
+```
 /**
  * Deletes a blob
  * @param string $dir the container
@@ -57,12 +61,16 @@ public function scandir(string $dir)
  * @return boolean
  */
 public function unlink(string $dir, $file)
+```
+```
 /**
  * delete container
  * @param string $dir the container
  * @return boolean
  */
 public function rmdir(string $dir)
+```
+```
 /**
  * Copies file
  * @param type $dest_dir the container
