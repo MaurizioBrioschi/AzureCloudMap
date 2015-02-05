@@ -1,7 +1,8 @@
 # AzureCloudMap
 PHP Utilities for Azure cloud API filesystem
 
-Permit to inteface with Microsoft Azure cloud using same function of PHP assuming that which is in PHP library a directory in Azure is a Container and a file is a blob.
+Permit to inteface with Microsoft Azure cloud using same function similar in PHP.
+
 
 ## Install
 
