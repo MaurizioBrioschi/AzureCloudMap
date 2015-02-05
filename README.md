@@ -81,3 +81,6 @@ public function rmdir(string $dir)
 public function copy(string $dest_dir, string $dest_blob, string $local_file)
 ```
 
+### todo
+Implements new functions and test
+
