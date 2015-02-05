@@ -1,0 +1,25 @@
+{
+    "name": "ridesoft/azure-cloud-map",
+    "description": "PHP Utilities for Azure cloud API filesystem",
+    "authors": [
+        {
+            "name": "ridesoft",
+            "email": "maurizio.brioschi@ridesoft.org"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "pear",
+            "url": "http://pear.php.net"
+        }
+    ],
+    "require": {
+        "microsoft/windowsazure": "*"
+    },
+    "autoload": {
+        "classmap": [
+            "src"           
+        ]
+    },
+    "minimum-stability": "dev"
+}
