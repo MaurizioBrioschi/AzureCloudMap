@@ -15,6 +15,15 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
         $this->config = require_once 'src/config/config.php';
         $this->azure = new AzureIO($this->config['azure']['connectionstring']);
     }
+    
+    public function testScandir()   {
+        $objects = $this->azure->scandir('pdf');
+        $this->assertArrayHasKey('shit',$objects);
+    }
+    
+    public function testCopy()  {
+        $this->azure->copy('pdf','rock/test.php','/home/maurizio/Desktop/test.pdf');
+    }
     /**
      * @dataProvider downloadWrongProvider
      */
@@ -22,7 +31,6 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
         $this->assertFalse($this->azure->download($container,$file,$destination));
         
     }
-    
     /**
      * @dataProvider downloadCorrectProvider
      */
@@ -36,7 +44,7 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
     public function downloadCorrectProvider(){
         return [
             [
-                'pdf','e3e50cf02910fe819538030ce2dd498f/MW_vol_10.pdf','MW_vol_10.pdf'
+                'pdf','ciao.pdf','rock.pdf'
             ]
         ];
     }
