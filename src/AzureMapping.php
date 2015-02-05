@@ -12,7 +12,7 @@ abstract class AzureMapping {
     protected $blobRestProxy;
     
     public function __construct($connectionString) {
-        $this->connectionstring = Config::get($connectionString);
+        $this->connectionstring = $connectionString;
         $this->blobRestProxy = ServicesBuilder::getInstance()->createBlobService($this->connectionstring);
     }
 }
