@@ -16,18 +16,35 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
         $this->azure = new AzureIO($this->config['azure']['connectionstring']);
     }
     /**
-     * @dataProvider downloadProvider
+     * @dataProvider downloadWrongProvider
+     */
+    public function testFalseDownload($container,$file,$destination)  {
+        $this->assertFalse($this->azure->download($container,$file,$destination));
+        
+    }
+    
+    /**
+     * @dataProvider downloadCorrectProvider
      */
     public function testDownload($container,$file,$destination)  {
-        $this->azure->download($container,$file,$destination);
-        $this->assertTrue(file_exists('MW_vol_10.pdf'));
+        $this->assertTrue($this->azure->download($container,$file,$destination));
         unlink($destination);
     }
     
-    public function downloadProvider(){
+    
+    
+    public function downloadCorrectProvider(){
         return [
             [
-                'pdf','test.pdf','test.pdf'
+                'pdf','e3e50cf02910fe819538030ce2dd498f/MW_vol_10.pdf','MW_vol_10.pdf'
+            ]
+        ];
+    }
+    
+    public function downloadWrongProvider(){
+        return [
+            [
+                'pdf','skate.pdf','isshit.pdf'
             ]
         ];
     }
