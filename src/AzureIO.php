@@ -10,25 +10,89 @@ use WindowsAzure\Common\ServiceException;
  * @author maurizio brioschi <maurizio.brioschi@ridesoft.org>
  */
 class AzureIO extends AzureMapping {
-    
+
     /**
      * Download from the Azure cloud the blob in the container
      * @param string $dir is the container
      * @param string $file is the blob
      * @param string $destinationFilename
+     * @return boolean
      */
-    public function download($dir, $file,$destinationFilename) {
+    public function download($dir, $file, $destinationFilename) {
         try {
             // Get blob.
             $blob = $this->blobRestProxy->getBlob($dir, $file);
-            file_put_contents($destinationFilename,stream_get_contents($blob->getContentStream()));
-        }catch(ServiceException $e){
-            // Handle exception based on error codes and messages.
-            // Error codes and messages are here: 
-            // http://msdn.microsoft.com/it-it/library/windowsazure/dd179439.aspx
-            $code = $e->getCode();
-            $error_message = $e->getMessage();
-            echo $code . ": " . $error_message . "<br />";
+            file_put_contents($destinationFilename, stream_get_contents($blob->getContentStream()));
+            return true;
+        } catch (ServiceException $e) {
+            return false;
         }
     }
+
+    /**
+     * List files and directories inside the specified container
+     * @param string $dir the container
+     * @return array
+     */
+    public function scandir(string $dir) {
+        try {
+            $blob_list = $this->blobRestProxy->listBlobs($dir);
+            $blobs = $blob_list->getBlobs();
+
+            $objects = [];
+            foreach ($blobs as $blob) {
+                array_push($objects, $blob);
+            }
+            return $objects;
+        } catch (Exception $ex) {
+            return null;
+        }
+    }
+
+    /**
+     * Deletes a blob
+     * @param string $dir the container
+     * @param type $file is the blob
+     * @return boolean
+     */
+    public function unlink(string $dir, $file) {
+        try {
+            $this->blobRestProxy->deleteBlob($dir, $file);
+        } catch (ServiceException $e) {
+            return false;
+        }
+    }
+    /**
+     * delete container
+     * @param string $dir the container
+     * @return boolean
+     */
+    public function rmdir(string $dir) {
+        try {
+            // Delete container.
+            $this->blobRestProxy->deleteContainer($dir);
+            return true;
+        } catch (ServiceException $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Copies file
+     * @param type $dest_dir the container
+     * @param type $dest_blob the blob
+     * @param type $local_file 
+     * @return boolean
+     */
+    public function copy(string $dest_dir, string $dest_blob, string $local_file) {
+        $content = fopen($local_file, "r");
+        try {
+            //Upload blob
+            $this->blobRestProxy->createBlockBlob($dest_dir, $dest_blob, $content);
+            return true;
+        } catch (ServiceException $e) {
+            return false;
+        }
+    }
+
 }
