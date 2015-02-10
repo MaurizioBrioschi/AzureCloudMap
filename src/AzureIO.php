@@ -84,7 +84,7 @@ class AzureIO extends AzureMapping {
      * @param type $local_file 
      * @return boolean
      */
-    public function copy($dest_dir, $dest_blob, string $local_file) {
+    public function copy($dest_dir, $dest_blob,$local_file) {
         $content = fopen($local_file, "r");
         try {
             //Upload blob
