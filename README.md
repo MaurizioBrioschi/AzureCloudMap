@@ -24,7 +24,10 @@ sudo composer install
 ```
 
 ## Use
-Set in src/config/config.php your parameters
+Set in src/config/config.php your parameters and import autoload in your file:
+```
+require __DIR__.'/../vendor/autoload.php';
+```
 Create an instance of AzureCloudMap:
 ```
 use \ridesoft\Azure\AzureIO;
