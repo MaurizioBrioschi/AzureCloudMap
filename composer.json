@@ -1,5 +1,5 @@
 {
-    "name": "ridesoft/azure-cloud-map",
+    "name": "ridesoft/azurecloudmap",
     "description": "PHP Utilities for Azure cloud API filesystem for Laravel 4.2",
     "authors": [
         {
