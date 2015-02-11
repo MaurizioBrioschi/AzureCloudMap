@@ -1,4 +1,4 @@
-<?php namespace ridesoft\Azure\Facades;
+<?php namespace ridesoft\AzureCloudMap\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

@@ -1,4 +1,4 @@
-<?php namespace ridesoft\Azure;
+<?php namespace ridesoft\AzureCloudMap;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -17,9 +17,8 @@ class AzureCloudMapServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('ridesoft/AzureCloudMap','AzureCloudMap');
+		$this->package('ridesoft/AzureCloudMap');
 	}
-
 	/**
 	 * Register the service provider.
 	 *
@@ -30,14 +29,5 @@ class AzureCloudMapServiceProvider extends ServiceProvider {
 		
 	}
 
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array('ridesoft/AzureCloudMap');
-	}
-
+	
 }

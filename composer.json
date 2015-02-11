@@ -1,6 +1,6 @@
 {
     "name": "ridesoft/azure-cloud-map",
-    "description": "PHP Utilities for Azure cloud API filesystem",
+    "description": "PHP Utilities for Azure cloud API filesystem for Laravel 4.2",
     "authors": [
         {
             "name": "ridesoft",
@@ -14,6 +14,7 @@
         }
     ],
     "require": {
+        "illuminate/support": "4.2.*",
         "microsoft/windowsazure": "*"
     },
     "require-dev": {

@@ -1,6 +1,6 @@
 <?php
 
-namespace ridesoft\Azure;
+namespace ridesoft\AzureCloudMap;
 
 use WindowsAzure\Common\ServiceException;
 
