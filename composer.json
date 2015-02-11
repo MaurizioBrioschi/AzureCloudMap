@@ -21,9 +21,9 @@
         "phpunit/phpunit": "4.4.*"
     },
     "autoload": {
-        "classmap": [
-            "src"
-        ]
+        "psr-0": {
+            "ridesoft\\AzureCloudMap": "src/"
+        }
     },
     "minimum-stability": "dev"
 }

@@ -12,5 +12,7 @@ class AzureFacade extends Facade {
     protected static function getFacadeAccessor() {
         return 'AzureCloudMap';
     }
+    
+    
 
 }
