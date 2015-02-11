@@ -17,7 +17,7 @@ class AzureCloudMapServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('ridesoft/AzureCloudMap');
+		$this->package('ridesoft/AzureCloudMap','AzureCloudMap');
 	}
 
 	/**
@@ -37,7 +37,7 @@ class AzureCloudMapServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array();
+		return array('ridesoft/AzureCloudMap');
 	}
 
 }
