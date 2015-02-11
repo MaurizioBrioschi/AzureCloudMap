@@ -1,7 +1,7 @@
 <?php
 return [
     'azure' => [
-        'connectionstring' => 'mypersonalstring',
+        'connectionstring' => 'mystringconnection',
     ]
 ];
 

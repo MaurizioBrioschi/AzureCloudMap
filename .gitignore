@@ -2,3 +2,4 @@
 /vendor/
 composer.lock
 mytest.php
+src/config/config.php
