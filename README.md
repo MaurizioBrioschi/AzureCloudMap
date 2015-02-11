@@ -28,6 +28,11 @@ and in array aliases:
 'AzureIO'           => 'ridesoft\AzureCloudMap\Facades\AzureIO'
 ```
 
+now publish your configuration with:
+```
+php artisan config:publish ridesoft/azurecloudmap
+```
+
 ## Use
 To list blob in a container:
 ```
