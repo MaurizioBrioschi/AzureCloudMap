@@ -45,13 +45,13 @@ AzureIO::download($dir, $file, $destinationFilename);
 
 *$destinationFilename* is the path in which download the blob
 
-**To list all blobs in a container: **
+**To list all blobs in a container:**
 ```
 AzureIO::scandir($dir);
 ```
 *$dir* is the container
 
-** to delete a blob: **
+**To delete a blob:**
 ```
 AzureIO::unlink($dir, $file);
 ```
@@ -59,15 +59,15 @@ AzureIO::unlink($dir, $file);
 
 *$file* is the blob
 
-**To remove a container: **
+**To remove a container:**
 ```
-rmdir($dir);
+AzureIO::rmdir($dir);
 ```
 *$dir* is the container
 
-**To copy a local file to azure cloud*
+**To copy a local file to azure cloud**
 ```
-copy($dest_dir, $dest_blob, $local_file)
+AzureIO::copy($dest_dir, $dest_blob, $local_file)
 ```
 *$dest_dir* is the container
 
