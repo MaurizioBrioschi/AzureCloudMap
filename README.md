@@ -34,10 +34,13 @@ php artisan config:publish ridesoft/azurecloudmap
 ```
 
 ## Use
-To list blob in a container:
+To download a blob:
 ```
-AzureIO::scandir('pdf')
+AzureIO::download($dir, $file, $destinationFilename);
 ```
+$dir is the name of the container
+$file is the name of the blob
+$destinationFilename is the path in which download the blob
 
 
 
