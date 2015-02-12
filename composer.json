@@ -3,6 +3,7 @@
     "description": "PHP Utility library to interface with Microsoft Azure Cloud API filesystem that works as in Laravel 4.2 as in pure php.",
     "keywords": ["php", "laravel","microsoft","azure cloud"],
     "version": "0.3.1",
+    "license": "MIT",
     "authors": [
         {
             "name": "ridesoft",
