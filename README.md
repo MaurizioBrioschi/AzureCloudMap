@@ -61,13 +61,13 @@ AzureIO::unlink($dir, $file);
 
 **To remove a container:**
 ```
-rmdir($dir);
+AzureIO::rmdir($dir);
 ```
 *$dir* is the container
 
 **To copy a local file to azure cloud**
 ```
-copy($dest_dir, $dest_blob, $local_file)
+AzureIO::copy($dest_dir, $dest_blob, $local_file)
 ```
 *$dest_dir* is the container
 
