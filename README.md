@@ -39,7 +39,9 @@ To download a blob:
 AzureIO::download($dir, $file, $destinationFilename);
 ```
 $dir is the name of the container
+
 $file is the name of the blob
+
 $destinationFilename is the path in which download the blob
 
 
