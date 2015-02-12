@@ -75,6 +75,10 @@ AzureIO::copy($dest_dir, $dest_blob, $local_file)
 
 *$local_file* is the path of the local file
 
+**To create a new container**
+```
+AzureIO::mkdir($dir,$access='cb', array $metadata=array())
+```
 ## Use it pure PHP
 ### Install
 
@@ -145,6 +149,24 @@ public function rmdir(string $dir)
  */
 public function copy(string $dest_dir, string $dest_blob, string $local_file)
 ```
-
-
-
+```
+/**
+ * create a container
+ * @param type $dir name of container
+ * @param type $access can be cb(CONTAINER_AND_BLOBS) or b (BLOBS_ONLY)
+ * CONTAINER_AND_BLOBS:     
+ * Specifies full public read access for container and blob data.
+ * proxys can enumerate blobs within the container via anonymous 
+ * request, but cannot enumerate containers within the storage account.
+ *
+ * BLOBS_ONLY:
+ * Specifies public read access for blobs. Blob data within this 
+ * container can be read via anonymous request, but container data is not 
+ * available. proxys cannot enumerate blobs within the container via 
+ * anonymous request.
+ * If this value is not specified in the request, container data is 
+ * private to the account owner.
+ * @return boolean
+ */
+public function mkdir($dir,$access='cb', array $metadata=array())
+```

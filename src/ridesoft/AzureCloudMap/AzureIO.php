@@ -3,7 +3,8 @@
 namespace ridesoft\AzureCloudMap;
 
 use WindowsAzure\Common\ServiceException;
-
+use WindowsAzure\Blob\Models\CreateContainerOptions;
+use WindowsAzure\Blob\Models\PublicAccessType;
 /**
  * IO class for Microsoft Azure in PHP function
  *
@@ -109,7 +110,13 @@ class AzureIO extends AzureMapping {
      * @return boolean
      */
     public function copy($dest_dir, $dest_blob, $local_file) {
-        $content = fopen($local_file, "r");
+        try{
+            $content = fopen($local_file, "r");
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+            return false;
+        }
+        
         try {
             //Upload blob
             $this->blobRestProxy->createBlockBlob($dest_dir, $dest_blob, $content);
