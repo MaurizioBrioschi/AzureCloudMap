@@ -38,6 +38,7 @@ class AzureIO extends AzureMapping {
         try {
             $blob_list = $this->blobRestProxy->listBlobs($dir);
             $blobs = $blob_list->getBlobs();
+
             $objects = [];
             foreach ($blobs as $blob) {
                 array_push($objects, $blob);
@@ -61,7 +62,6 @@ class AzureIO extends AzureMapping {
             return false;
         }
     }
-
     /**
      * delete container
      * @param string $dir the container
@@ -84,7 +84,7 @@ class AzureIO extends AzureMapping {
      * @param type $local_file 
      * @return boolean
      */
-    public function copy($dest_dir, $dest_blob, $local_file) {
+    public function copy($dest_dir, $dest_blob,$local_file) {
         $content = fopen($local_file, "r");
         try {
             //Upload blob
