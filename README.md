@@ -1,3 +1,4 @@
+[![Latest Stable Version](https://poser.pugx.org/ridesoft/azurecloudmap/v/stable.svg)](https://packagist.org/packages/ridesoft/azurecloudmap) [![Total Downloads](https://poser.pugx.org/ridesoft/azurecloudmap/downloads.svg)](https://packagist.org/packages/ridesoft/azurecloudmap) [![Latest Unstable Version](https://poser.pugx.org/ridesoft/azurecloudmap/v/unstable.svg)](https://packagist.org/packages/ridesoft/azurecloudmap) [![License](https://poser.pugx.org/ridesoft/azurecloudmap/license.svg)](https://packagist.org/packages/ridesoft/azurecloudmap)
 # AzureCloudMap
 
 PHP Utility library to interface with Microsoft Azure Cloud API filesystem that works as in Laravel 4.2 as in pure php.
