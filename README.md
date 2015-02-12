@@ -8,14 +8,8 @@ PHP Utility library to interface with Microsoft Azure Cloud API filesystem that 
 
 Add to your laravel application composer:
 ```
-"repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:ridesoft/AzureCloudMap.git" 
-        }
-     ],
 "require": {
-        "ridesoft/AzureCloudMap": "0.2.*"
+        "ridesoft/azurecloudmap": "0.3.*"
     },
 ```
 Type composer install or composer update.
@@ -84,14 +78,8 @@ AzureIO::mkdir($dir,$access='cb', array $metadata=array())
 
 Add to your laravel application composer:
 ```
-"repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:ridesoft/AzureCloudMap.git" 
-        }
-     ],
 "require": {
-        "ridesoft/AzureCloudMap": "0.2.*"
+        "ridesoft/azurecloudmap": "0.3.*"
     },
 ```
 Type composer install or composer update.
