@@ -3,7 +3,9 @@ PHP Utilities for Azure cloud API filesystem for Laravel 4.2
 
 Permit to inteface with Microsoft Azure cloud using same function sintax similar in PHP.
 
-## Install
+## Use in Laravel
+
+### Install
 
 Add to your laravel application composer:
 ```
@@ -32,8 +34,8 @@ now publish your configuration with:
 ```
 php artisan config:publish ridesoft/azurecloudmap
 ```
+#### Functions mapped
 
-## Use
 To download a blob:
 ```
 AzureIO::download($dir, $file, $destinationFilename);
