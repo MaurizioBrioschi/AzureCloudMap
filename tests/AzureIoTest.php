@@ -1,5 +1,5 @@
 <?php
-use \ridesoft\Azure\AzureIO;
+use ridesoft\AzureCloudMap\AzureIO;
 
 /**
  * Description of AzureIoTest
@@ -13,15 +13,25 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
     protected function setUp() {
         parent::setUp();
         $this->config = require_once 'src/config/config.php';
-        $this->azure = new AzureIO($this->config['azure']['connectionstring']);
+       
+    }
+    /**
+     * @dataProvider downloadCorrectProvider
+     */
+    public function testDownload($container,$file,$destination)  {
+        $this->azure = new AzureIO($this->config);
+        $this->assertTrue($this->azure->download($container,$file,$destination));
+        unlink($destination);
     }
     
     public function testScandir()   {
+         $this->azure = new AzureIO($this->config);
         $objects = $this->azure->scandir('pdf');
         $this->assertArrayHasKey('shit',$objects);
     }
     
     public function testCopy()  {
+        $this->azure = new AzureIO($this->config);
         $this->azure->copy('pdf','rock/test.php','/home/maurizio/Desktop/test.pdf');
     }
     /**
@@ -31,13 +41,7 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
         $this->assertFalse($this->azure->download($container,$file,$destination));
         
     }
-    /**
-     * @dataProvider downloadCorrectProvider
-     */
-    public function testDownload($container,$file,$destination)  {
-        $this->assertTrue($this->azure->download($container,$file,$destination));
-        unlink($destination);
-    }
+   
     
     
     
