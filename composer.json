@@ -27,5 +27,5 @@
             "ridesoft\\AzureCloudMap": "src/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }
