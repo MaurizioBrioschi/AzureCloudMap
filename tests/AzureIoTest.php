@@ -32,21 +32,7 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
         $this->assertTrue(file_exists('tests/destroy.txt'));
         unlink('tests/destroy.txt');
     }
-    /**
-     * @depends testCopyandScanDirDownload
-     */
-    public function testDownloadUrl(){
-        $azure = new AzureUrl($this->config);
-        $azureIO = new AzureIO($this->config);
-        $this->assertTrue($azureIO->copy('test','snowboard.txt','tests/test.txt'));
-        $this->assertTrue($azureIO->copy('test','subdirectory/snowboard.txt','tests/test.txt'));
-        $this->assertTrue($azure->download($this->config['azure']['base_url'].'/test/snowboard.txt', 'tests/snowboard.txt'));
-        $this->assertTrue($azure->download($this->config['azure']['base_url'].'/test/subdirectory/snowboard.txt', 'tests/snowboard2.txt'));
-        $this->assertTrue(file_exists('tests/snowboard2.txt'));
-        $this->assertTrue(file_exists('tests/snowboard.txt'));
-        unlink('tests/snowboard2.txt');
-        unlink('tests/snowboard.txt');
-    }
+    
     /**
      * @dataProvider mkdirProvider
      */

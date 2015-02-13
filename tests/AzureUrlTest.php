@@ -1,5 +1,4 @@
 <?php
-use ridesoft\AzureCloudMap\AzureIO;
 use ridesoft\AzureCloudMap\AzureUrl;
 
 /**
@@ -7,80 +6,52 @@ use ridesoft\AzureCloudMap\AzureUrl;
  *
  * @author maurizio brioschi <maurizio.brioschi@ridesoft.org>
  */
-class AzureIoTest extends PHPUnit_Framework_TestCase{
+class AzureUrlTest extends PHPUnit_Framework_TestCase{
     protected $config;
     
     protected function setUp() {
         $this->config = require 'src/config/config.php';     
     }
-    /**
-     * @dataProvider mkdirProvider
-     */
-    public function testMkdir($dir,$access,$metadata) {
-        $azure = new AzureIO($this->config);
-        $this->assertTrue($azure->mkdir($dir,$access,$metadata));
-    }
-    /**
-     * @depends testMkdir
-     */
-    public function testCopyandScanDirDownload()  {
-        $azure = new AzureIO($this->config);
-        $this->assertTrue($azure->copy('test','skate.txt','tests/test.txt'));
-        $objects = $azure->scandir('test');
-        $this->assertGreaterThan(0, count($objects));
-        $this->assertTrue($azure->getBlob('test','skate.txt','tests/destroy.txt'));
-        $this->assertTrue(file_exists('tests/destroy.txt'));
-        unlink('tests/destroy.txt');
-    }
-    /**
-     * @depends testCopyandScanDirDownload
-     */
-    public function testDownloadUrl(){
+    
+    public function testAddContainer()  {
         $azure = new AzureUrl($this->config);
-        $azureIO = new AzureIO($this->config);
-        $this->assertTrue($azureIO->copy('test','snowboard.txt','tests/test.txt'));
-        $this->assertTrue($azureIO->copy('test','subdirectory/snowboard.txt','tests/test.txt'));
-        $this->assertTrue($azure->download($this->config['azure']['base_url'].'/test/snowboard.txt', 'tests/snowboard.txt'));
-        $this->assertTrue($azure->download($this->config['azure']['base_url'].'/test/subdirectory/snowboard.txt', 'tests/snowboard2.txt'));
-        $this->assertTrue(file_exists('tests/snowboard2.txt'));
+        $this->assertTrue($azure->addContainer($this->config['azure']['base_url'].'/pizza'));
+    }
+    /**
+     * @depends testAddContainer
+     */
+    public function testAddBlob()   {
+        $azure = new AzureUrl($this->config);
+        $this->assertTrue($azure->addBlob($this->config['azure']['base_url'].'/pizza/ciao.txt','tests/test.txt'));
+    }
+    /**
+     * @depends testAddContainer
+     */
+    public function testViewBlobs() {
+        $azure = new AzureUrl($this->config);    
+        $this->assertGreaterThan(0,count($azure->viewBlobs($this->config['azure']['base_url'].'/pizza')));
+    }   
+     /**
+     * @depends testAddBlob
+     */
+    public function testDownload(){
+        $azure = new AzureUrl($this->config);    
+        $this->assertTrue($azure->download($this->config['azure']['base_url'].'/pizza/ciao.txt', 'tests/snowboard.txt'));
         $this->assertTrue(file_exists('tests/snowboard.txt'));
-        unlink('tests/snowboard2.txt');
         unlink('tests/snowboard.txt');
     }
     /**
-     * @dataProvider mkdirProvider
+     * @depends testAddBlob
      */
-    public function testMkdirFail($dir,$access,$metadata) {
-        $azure = new AzureIO($this->config);
-        $this->assertFalse($azure->mkdir($dir,$access,$metadata));
+    public function testDeleteBlob()    {
+        $azure = new AzureUrl($this->config);    
+        $this->assertTrue($azure->delete($this->config['azure']['base_url'].'/pizza/ciao.txt'));
     }
     /**
-     * @depends testCopyandScanDirDownload
+     * @depends testAddContainer
      */
-    public function testUnlink(){
-        $azure = new AzureIO($this->config);
-        $this->assertTrue($azure->copy('test','dick.txt','tests/test.txt'));
-        $this->assertTrue($azure->unlink('test', 'dick.txt'));
-        
-    }
-    /**
-     * @dataProvider mkdirProvider
-     */
-    public function testRmdir($dir,$access,$metadata){
-        $azure = new AzureIO($this->config);
-        $this->assertTrue($azure->rmdir('test'));
-        $this->assertTrue($azure->rmdir('test2'));
-        $this->assertTrue($azure->rmdir('test3'));
-        
-        $this->assertFalse($azure->mkdir($dir,$access,$metadata));
-        
-    }
-    
-    public function mkdirProvider() {
-        return [
-              ['test','cb',[]],
-              ['test2','b',[]],
-              ['test3','cb',['author'=>'Mauri']]
-        ];
+    public function testDeleteContainer()    {
+        $azure = new AzureUrl($this->config);    
+        $this->assertTrue($azure->deleteContainer($this->config['azure']['base_url'].'/pizza'));
     }
 }
