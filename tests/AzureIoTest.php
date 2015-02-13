@@ -28,7 +28,7 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
         $this->assertTrue($azure->copy('test','skate.txt','tests/test.txt'));
         $objects = $azure->scandir('test');
         $this->assertGreaterThan(0, count($objects));
-        $this->assertTrue($azure->download('test','skate.txt','tests/destroy.txt'));
+        $this->assertTrue($azure->getBlob('test','skate.txt','tests/destroy.txt'));
         $this->assertTrue(file_exists('tests/destroy.txt'));
         unlink('tests/destroy.txt');
     }
@@ -37,8 +37,9 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
      */
     public function testDownloadUrl(){
         $azure = new AzureUrl($this->config);
-        $this->assertTrue($azure->copy('test','snowboard.txt','tests/test.txt'));
-        $this->assertTrue($azure->copy('test','subdirectory/snowboard.txt','tests/test.txt'));
+        $azureIO = new AzureIO($this->config);
+        $this->assertTrue($azureIO->copy('test','snowboard.txt','tests/test.txt'));
+        $this->assertTrue($azureIO->copy('test','subdirectory/snowboard.txt','tests/test.txt'));
         $this->assertTrue($azure->download($this->config['azure']['base_url'].'/test/snowboard.txt', 'tests/snowboard.txt'));
         $this->assertTrue($azure->download($this->config['azure']['base_url'].'/test/subdirectory/snowboard.txt', 'tests/snowboard2.txt'));
         $this->assertTrue(file_exists('tests/snowboard2.txt'));
