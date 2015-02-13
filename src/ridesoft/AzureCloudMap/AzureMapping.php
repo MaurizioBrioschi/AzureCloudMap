@@ -31,9 +31,15 @@ abstract class AzureMapping {
      */
     protected function getBlob($dir, $file, $destinationFilename) {
         try {
+            
             // Get blob.
             $blob = $this->blobRestProxy->getBlob($dir, $file);
-            file_put_contents($destinationFilename, stream_get_contents($blob->getContentStream()));
+            try{
+                file_put_contents($destinationFilename, stream_get_contents($blob->getContentStream()));
+            } catch (Exception $ex) {
+                throw $ex;
+            }
+            
             return true;
         } catch (ServiceException $e) {
             // Handle exception based on error codes and messages.
