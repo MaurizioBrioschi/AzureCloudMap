@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 
-class AzureIO extends Facade {
+class AzureUrl extends Facade {
 
     /**
      * Get the registered name of the component.
@@ -10,7 +10,7 @@ class AzureIO extends Facade {
      * @return string
      */
     protected static function getFacadeAccessor() {
-        return 'AzureIO';
+        return 'AzureUrl';
     }
     
     
