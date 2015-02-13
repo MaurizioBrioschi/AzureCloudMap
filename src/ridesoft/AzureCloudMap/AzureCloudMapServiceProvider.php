@@ -49,10 +49,14 @@ class AzureCloudMapServiceProvider extends ServiceProvider {
         $this->app['AzureIO'] = $this->app->share(function($app) {
             return new AzureIO(Config::get('azurecloudmap::config'));
         });
+        
+        $this->app['AzureUrl'] = $this->app->share(function($app) {
+            return new AzureUrl(Config::get('azurecloudmap::config'));
+        });
     }
 
     public function provides() {
-        return ['AzureIO'];
+        return ['AzureIO','AzureUrl'];
     }
 
 }
