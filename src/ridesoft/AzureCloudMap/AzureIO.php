@@ -7,7 +7,8 @@ use WindowsAzure\Blob\Models\CreateContainerOptions;
 use WindowsAzure\Blob\Models\PublicAccessType;
 
 /**
- * IO class for Microsoft Azure in PHP function
+ * IO class for Microsoft Azure in PHP function 
+ * works like path methods using container and blob
  *
  * @author maurizio brioschi <maurizio.brioschi@ridesoft.org>
  */
