@@ -26,7 +26,7 @@ class AzureIO extends AzureMapping {
      * @return array
      */
     public function scandir($dir){
-        return parent::scandir($dir);
+        return parent::listContainer($dir);
     }
     /**
      * Deletes a blob
@@ -35,7 +35,7 @@ class AzureIO extends AzureMapping {
      * @return boolean
      */
     public function unlink($dir, $file){
-        return parent::unlink($dir, $file);
+        return parent::deleteBlob($dir, $file);
     }
     /**
      * delete container
@@ -43,17 +43,17 @@ class AzureIO extends AzureMapping {
      * @return boolean
      */
     public function rmdir($dir){
-        return parent::rmdir($dir);
+        return parent::removeContainer($dir);
     }
     /**
-     * Copy files
+     * Copy file
      * @param type $dest_dir the container
      * @param type $dest_blob the blob
      * @param type $local_file 
      * @return boolean
      */
     public function copy($dest_dir, $dest_blob, $local_file){
-        return parent::copy($dest_dir, $dest_blob, $local_file);
+        return parent::copyInBlob($dest_dir, $dest_blob, $local_file);
     }
     /**
      * create a container
@@ -74,6 +74,6 @@ class AzureIO extends AzureMapping {
      * @return boolean
      */
     public function mkdir($dir, $access = 'cb', array $metadata = array()){
-        return parent::mkdir($dir, $access, $metadata);
+        return parent::createContainer($dir, $access, $metadata);
     }
 }

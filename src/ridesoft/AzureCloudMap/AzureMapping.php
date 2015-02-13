@@ -52,7 +52,7 @@ abstract class AzureMapping {
      * @param string $dir the container
      * @return array
      */
-    protected function scandir($dir) {
+    protected function listContainer($dir) {
         try {
             $blob_list = $this->blobRestProxy->listBlobs($dir);
             $blobs = $blob_list->getBlobs();
@@ -78,7 +78,7 @@ abstract class AzureMapping {
      * @param type $file is the blob
      * @return boolean
      */
-    protected function unlink($dir, $file) {
+    protected function deleteBlob($dir, $file) {
         try {
             $this->blobRestProxy->deleteBlob($dir, $file);
             return true;
@@ -98,7 +98,7 @@ abstract class AzureMapping {
      * @param string $dir the container
      * @return boolean
      */
-    protected function rmdir($dir) {
+    protected function removeContainer($dir) {
         try {
             // Delete container.
             $this->blobRestProxy->deleteContainer($dir);
@@ -115,13 +115,13 @@ abstract class AzureMapping {
     }
 
     /**
-     * Copies file
+     * Copy file into blob
      * @param type $dest_dir the container
      * @param type $dest_blob the blob
      * @param type $local_file 
      * @return boolean
      */
-    protected function copy($dest_dir, $dest_blob, $local_file) {
+    protected function copyInBlob($dest_dir, $dest_blob, $local_file) {
         try {
             $content = fopen($local_file, "r");
         } catch (Exception $ex) {
@@ -162,7 +162,7 @@ abstract class AzureMapping {
      * private to the account owner.
      * @return boolean
      */
-    protected function mkdir($dir, $access = 'cb', array $metadata = array()) {
+    protected function createContainer($dir, $access = 'cb', array $metadata = array()) {
         $createContainerOptions = new CreateContainerOptions();
         switch ($access) {
             case 'cb':
