@@ -89,5 +89,7 @@ class AzureUrl extends AzureMapping {
             return false;
         }
     }
+    
+    
 
 }
