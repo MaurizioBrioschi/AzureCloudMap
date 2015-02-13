@@ -1,5 +1,6 @@
 <?php
 use ridesoft\AzureCloudMap\AzureIO;
+use ridesoft\AzureCloudMap\AzureUrl;
 
 /**
  * Description of AzureIoTest
@@ -35,11 +36,11 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
      * @depends testCopyandScanDirDownload
      */
     public function testDownloadUrl(){
-        $azure = new AzureIO($this->config);
+        $azure = new AzureUrl($this->config);
         $this->assertTrue($azure->copy('test','snowboard.txt','tests/test.txt'));
         $this->assertTrue($azure->copy('test','subdirectory/snowboard.txt','tests/test.txt'));
-        $this->assertTrue($azure->downloadUrl($this->config['azure']['base_url'].'/test/snowboard.txt', 'tests/snowboard.txt'));
-        $this->assertTrue($azure->downloadUrl($this->config['azure']['base_url'].'/test/subdirectory/snowboard.txt', 'tests/snowboard2.txt'));
+        $this->assertTrue($azure->download($this->config['azure']['base_url'].'/test/snowboard.txt', 'tests/snowboard.txt'));
+        $this->assertTrue($azure->download($this->config['azure']['base_url'].'/test/subdirectory/snowboard.txt', 'tests/snowboard2.txt'));
         $this->assertTrue(file_exists('tests/snowboard2.txt'));
         $this->assertTrue(file_exists('tests/snowboard.txt'));
         unlink('tests/snowboard2.txt');

@@ -2,9 +2,6 @@
 
 namespace ridesoft\AzureCloudMap;
 
-use WindowsAzure\Common\ServiceException;
-use WindowsAzure\Blob\Models\CreateContainerOptions;
-use WindowsAzure\Blob\Models\PublicAccessType;
 
 /**
  * IO class for Microsoft Azure in PHP function 
@@ -13,7 +10,6 @@ use WindowsAzure\Blob\Models\PublicAccessType;
  * @author maurizio brioschi <maurizio.brioschi@ridesoft.org>
  */
 class AzureIO extends AzureMapping {
-
     /**
      * Download from the Azure cloud the blob in the container
      * @param string $dir is the container
@@ -21,154 +17,44 @@ class AzureIO extends AzureMapping {
      * @param string $destinationFilename
      * @return boolean
      */
-    public function download($dir, $file, $destinationFilename) {
-        try {
-            // Get blob.
-            $blob = $this->blobRestProxy->getBlob($dir, $file);
-            file_put_contents($destinationFilename, stream_get_contents($blob->getContentStream()));
-            return true;
-        } catch (ServiceException $e) {
-            // Handle exception based on error codes and messages.
-            // Error codes and messages are here: 
-            // http://msdn.microsoft.com/it-it/library/windowsazure/dd179439.aspx
-            $code = $e->getCode();
-            $error_message = $e->getMessage();
-            echo $code . ": " . $error_message . "<br />";
-            return false;
-        }
+    public function download($dir, $file, $destinationFilename){
+        return parent::download($dir, $file, $destinationFilename);
     }
-    /**
-     * download a blob from its url
-     * @param type $url
-     * @param type $destinationFilename
-     * @return boolean
-     */
-    public function downloadUrl($url, $destinationFilename) {
-        if(strstr($url,$this->config['azure']['base_url'])==false)  {
-            echo "Url: $url is not a valid url";
-            return false;
-        }
-        $url = str_replace($this->config['azure']['base_url']."/", "", $url);
-        try {
-            $explosion = explode("/", $url);
-            $count_explosion = count($explosion);
-            if ($count_explosion >= 2) {
-                $dir = $explosion[0];
-                $file = $explosion[1];
-                for($i=2;$i<$count_explosion;$i++){
-                    $file .= "/".$explosion[$i];
-                }
-                return $this->download($dir, $file, $destinationFilename);
-            }
-            return false;
-        } catch (ServiceException $e) {
-            // Handle exception based on error codes and messages.
-            // Error codes and messages are here: 
-            // http://msdn.microsoft.com/it-it/library/windowsazure/dd179439.aspx
-            $code = $e->getCode();
-            $error_message = $e->getMessage();
-            echo $code . ": " . $error_message . "<br />";
-            return false;
-        }
-    }
-
     /**
      * List files and directories inside the specified container
      * @param string $dir the container
      * @return array
      */
-    public function scandir($dir) {
-        try {
-            $blob_list = $this->blobRestProxy->listBlobs($dir);
-            $blobs = $blob_list->getBlobs();
-            $objects = [];
-            foreach ($blobs as $blob) {
-                array_push($objects, $blob);
-            }
-            return $objects;
-        } catch (Exception $ex) {
-            // Handle exception based on error codes and messages.
-            // Error codes and messages are here: 
-            // http://msdn.microsoft.com/it-it/library/windowsazure/dd179439.aspx
-            $code = $e->getCode();
-            $error_message = $e->getMessage();
-            echo $code . ": " . $error_message . "<br />";
-            return null;
-        }
+    public function scandir($dir){
+        return parent::scandir($dir);
     }
-
     /**
      * Deletes a blob
      * @param string $dir the container
      * @param type $file is the blob
      * @return boolean
      */
-    public function unlink($dir, $file) {
-        try {
-            $this->blobRestProxy->deleteBlob($dir, $file);
-            return true;
-        } catch (ServiceException $e) {
-            // Handle exception based on error codes and messages.
-            // Error codes and messages are here: 
-            // http://msdn.microsoft.com/it-it/library/windowsazure/dd179439.aspx
-            $code = $e->getCode();
-            $error_message = $e->getMessage();
-            echo $code . ": " . $error_message . "<br />";
-            return false;
-        }
+    public function unlink($dir, $file){
+        return parent::unlink($dir, $file);
     }
-
     /**
      * delete container
      * @param string $dir the container
      * @return boolean
      */
-    public function rmdir($dir) {
-        try {
-            // Delete container.
-            $this->blobRestProxy->deleteContainer($dir);
-            return true;
-        } catch (ServiceException $e) {
-            // Handle exception based on error codes and messages.
-            // Error codes and messages are here: 
-            // http://msdn.microsoft.com/it-it/library/windowsazure/dd179439.aspx
-            $code = $e->getCode();
-            $error_message = $e->getMessage();
-            echo $code . ": " . $error_message . "<br />";
-            return false;
-        }
+    public function rmdir($dir){
+        return parent::rmdir($dir);
     }
-
     /**
-     * Copies file
+     * Copy files
      * @param type $dest_dir the container
      * @param type $dest_blob the blob
      * @param type $local_file 
      * @return boolean
      */
-    public function copy($dest_dir, $dest_blob, $local_file) {
-        try {
-            $content = fopen($local_file, "r");
-        } catch (Exception $ex) {
-            echo $ex->getMessage();
-            return false;
-        }
-
-        try {
-            //Upload blob
-            $this->blobRestProxy->createBlockBlob($dest_dir, $dest_blob, $content);
-            return true;
-        } catch (ServiceException $e) {
-            // Handle exception based on error codes and messages.
-            // Error codes and messages are here: 
-            // http://msdn.microsoft.com/it-it/library/windowsazure/dd179439.aspx
-            $code = $e->getCode();
-            $error_message = $e->getMessage();
-            echo $code . ": " . $error_message . "<br />";
-            return false;
-        }
+    public function copy($dest_dir, $dest_blob, $local_file){
+        return parent::copy($dest_dir, $dest_blob, $local_file);
     }
-
     /**
      * create a container
      * @param type $dir name of container
@@ -187,36 +73,7 @@ class AzureIO extends AzureMapping {
      * private to the account owner.
      * @return boolean
      */
-    public function mkdir($dir, $access = 'cb', array $metadata = array()) {
-        $createContainerOptions = new CreateContainerOptions();
-        switch ($access) {
-            case 'cb':
-                $createContainerOptions->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);
-                break;
-            case 'b':
-                $createContainerOptions->setPublicAccess(PublicAccessType::BLOBS_ONLY);
-                break;
-            default:
-                $createContainerOptions->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);
-        }
-
-        foreach ($metadata as $key => $value) {
-            $createContainerOptions->addMetaData($key, $value);
-        }
-
-        try {
-            // Create container.
-            $this->blobRestProxy->createContainer($dir, $createContainerOptions);
-            return true;
-        } catch (ServiceException $e) {
-            // Handle exception based on error codes and messages.
-            // Error codes and messages are here: 
-            // http://msdn.microsoft.com/it-it/library/windowsazure/dd179439.aspx
-            $code = $e->getCode();
-            $error_message = $e->getMessage();
-            echo $code . ": " . $error_message . "<br />";
-            return false;
-        }
+    public function mkdir($dir, $access = 'cb', array $metadata = array()){
+        return parent::mkdir($dir, $access, $metadata);
     }
-
 }
