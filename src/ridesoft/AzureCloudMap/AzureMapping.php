@@ -23,6 +23,59 @@ abstract class AzureMapping {
     }
     
     /**
+     * Analize the url and get the relative path
+     * @param type $url
+     * @return string
+     * @throws Exception
+     */
+    protected function analizeUrl($url) {
+        if (strstr($url, $this->config['azure']['base_url']) == false) {
+            throw new \Exception("Url: $url is not a valid url");
+        }
+        return str_replace($this->config['azure']['base_url'] . "/", "", $url);
+    }
+    /**
+     * get the container from the url
+     * @param type $url
+     * @return type
+     * @throws \ridesoft\AzureCloudMap\Exception
+     * @throws Exception
+     */
+    protected function getContainer($url) {
+        try {
+            $explosion = explode("/", $this->analizeUrl($url));
+            if (count($explosion) > 0) {
+                return $explosion[0];
+            }
+            throw new \Exception("The url doesn't contain a valid container");
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+    /**
+     * get the blob from the url
+     * @param type $url
+     * @return string
+     * @throws \ridesoft\AzureCloudMap\Exception
+     * @throws Exception
+     */
+    protected function getBlobName($url) {
+        try {
+            $explosion = explode("/", $this->analizeUrl($url));
+            $count_explosion = count($explosion);
+            if ($count_explosion > 1) {
+                $file = $explosion[1];
+                for ($i = 2; $i < $count_explosion; $i++) {
+                    $file .= "/" . $explosion[$i];
+                }
+                return $file;
+            }
+            throw new \Exception("The url doesn't contain a valid blob");
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+    /**
      * Download from the Azure cloud the blob in the container
      * @param string $dir is the container
      * @param string $file is the blob
@@ -36,6 +89,7 @@ abstract class AzureMapping {
             $blob = $this->blobRestProxy->getBlob($dir, $file);
             try{
                 file_put_contents($destinationFilename, stream_get_contents($blob->getContentStream()));
+                
             } catch (Exception $ex) {
                 throw $ex;
             }

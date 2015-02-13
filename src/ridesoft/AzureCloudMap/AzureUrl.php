@@ -9,60 +9,6 @@ namespace ridesoft\AzureCloudMap;
  */
 class AzureUrl extends AzureMapping {
     /**
-     * Analize the url and get the relative path
-     * @param type $url
-     * @return string
-     * @throws Exception
-     */
-    protected function analizeUrl($url) {
-        if (strstr($url, $this->config['azure']['base_url']) == false) {
-            throw new Exception("Url: $url is not a valid url");
-        }
-        return str_replace($this->config['azure']['base_url'] . "/", "", $url);
-    }
-    /**
-     * get the container from the url
-     * @param type $url
-     * @return type
-     * @throws \ridesoft\AzureCloudMap\Exception
-     * @throws Exception
-     */
-    protected function getContainer($url) {
-        try {
-            $explosion = explode("/", $this->analizeUrl($url));
-            if (count($explosion) > 0) {
-                return $explosion[0];
-            }
-            throw new Exception("The url doesn't contain a valid container");
-        } catch (Exception $ex) {
-            throw $ex;
-        }
-    }
-    /**
-     * get the blob from the url
-     * @param type $url
-     * @return string
-     * @throws \ridesoft\AzureCloudMap\Exception
-     * @throws Exception
-     */
-    protected function getBlobName($url) {
-        try {
-            $explosion = explode("/", $this->analizeUrl($url));
-            $count_explosion = count($explosion);
-            if ($count_explosion > 1) {
-                $file = $explosion[1];
-                for ($i = 2; $i < $count_explosion; $i++) {
-                    $file .= "/" . $explosion[$i];
-                }
-                return $file;
-            }
-            throw new Exception("The url doesn't contain a valid blob");
-        } catch (Exception $ex) {
-            throw $ex;
-        }
-    }
-
-    /**
      * download a blob from its url and save it the the destination
      * @param type $url
      * @param type $destinationFilename
@@ -89,6 +35,136 @@ class AzureUrl extends AzureMapping {
             return false;
         }
     }
+    /**
+     * delete a blob from the url
+     * @param type $url
+     * @return boolean
+     */
+    public function delete($url){
+        try {
+            $dir = $this->getContainer($url);
+            $file = $this->getBlobName($url);
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
+        
+        try {
+            return parent::deleteBlob($dir, $file);
+        } catch (ServiceException $e) {
+            // Handle exception based on error codes and messages.
+            // Error codes and messages are here: 
+            // http://msdn.microsoft.com/it-it/library/windowsazure/dd179439.aspx
+            $code = $e->getCode();
+            $error_message = $e->getMessage();
+            echo $code . ": " . $error_message . "<br />";
+            return false;
+        }
+    }
+    /**
+     * remove container from url
+     * @param type $dir
+     * @return boolean
+     */
+    public function deleteContainer($url)   {
+        try {
+            $dir = $this->getContainer($url);
+            
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
+        
+        try {
+            return parent::removeContainer($dir);
+        } catch (ServiceException $e) {
+            // Handle exception based on error codes and messages.
+            // Error codes and messages are here: 
+            // http://msdn.microsoft.com/it-it/library/windowsazure/dd179439.aspx
+            $code = $e->getCode();
+            $error_message = $e->getMessage();
+            echo $code . ": " . $error_message . "<br />";
+            return false;
+        }
+    }
+    /**
+     * add a file in the url blob
+     * @param type $path 
+     * @param type $url
+     * @return boolean
+     */
+    public function addBlob($url,$path){
+        try {
+            $dir = $this->getContainer($url);
+            $file = $this->getBlobName($url);
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
+        
+        try {
+            return parent::copyInBlob($dir, $file, $path);
+        } catch (ServiceException $e) {
+            // Handle exception based on error codes and messages.
+            // Error codes and messages are here: 
+            // http://msdn.microsoft.com/it-it/library/windowsazure/dd179439.aspx
+            $code = $e->getCode();
+            $error_message = $e->getMessage();
+            echo $code . ": " . $error_message . "<br />";
+            return false;
+        }
+    }
+    /**
+     * add container from its url
+     * @param type $url
+     * @param type $access
+     * @param array $metadata
+     * @return boolean
+     */
+    public function addContainer($url,$access='cb', array $metadata = array()){
+        try {
+            $dir = $this->getContainer($url);
+            
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
+        
+        try {
+            return parent::createContainer($dir, $access, $metadata);
+        } catch (ServiceException $e) {
+            // Handle exception based on error codes and messages.
+            // Error codes and messages are here: 
+            // http://msdn.microsoft.com/it-it/library/windowsazure/dd179439.aspx
+            $code = $e->getCode();
+            $error_message = $e->getMessage();
+            echo $code . ": " . $error_message . "<br />";
+            return false;
+        }
+    }
+    /**
+     * list files in a container starting from the url
+     * @param type $url
+     * @return boolean
+     */
+    public function viewBlobs($url)  {
+        try {
+            $dir = $this->getContainer($url);
+            
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
+        
+        try {
+            return parent::listContainer($dir);
+        } catch (ServiceException $e) {
+            // Handle exception based on error codes and messages.
+            // Error codes and messages are here: 
+            // http://msdn.microsoft.com/it-it/library/windowsazure/dd179439.aspx
+            $code = $e->getCode();
+            $error_message = $e->getMessage();
+            echo $code . ": " . $error_message . "<br />";
+            return false;
+        }
+    }
+    
+    
     
     
 
