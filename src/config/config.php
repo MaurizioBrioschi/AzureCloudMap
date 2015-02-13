@@ -1,7 +1,8 @@
 <?php
 return [
     'azure' => [
-        'connectionstring' => 'mystringconnection',
+        'connectionstring' => 'myconnection string',
+        'base_url' => 'http://test.blob.core.windows.net'
     ]
 ];
 

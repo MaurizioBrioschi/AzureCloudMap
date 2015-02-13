@@ -1,5 +1,5 @@
 <?php
-use \ridesoft\Azure\AzureIO;
+use ridesoft\AzureCloudMap\AzureIO;
 
 /**
  * Description of AzureIoTest
@@ -7,53 +7,78 @@ use \ridesoft\Azure\AzureIO;
  * @author maurizio brioschi <maurizio.brioschi@ridesoft.org>
  */
 class AzureIoTest extends PHPUnit_Framework_TestCase{
-    protected $azure;
     protected $config;
     
     protected function setUp() {
-        parent::setUp();
-        $this->config = require_once 'src/config/config.php';
-        $this->azure = new AzureIO($this->config['azure']['connectionstring']);
-    }
-    
-    public function testScandir()   {
-        $objects = $this->azure->scandir('pdf');
-        $this->assertArrayHasKey('shit',$objects);
-    }
-    
-    public function testCopy()  {
-        $this->azure->copy('pdf','rock/test.php','/home/maurizio/Desktop/test.pdf');
+        $this->config = require 'src/config/config.php';     
     }
     /**
-     * @dataProvider downloadWrongProvider
+     * @dataProvider mkdirProvider
      */
-    public function testFalseDownload($container,$file,$destination)  {
-        $this->assertFalse($this->azure->download($container,$file,$destination));
+    public function testMkdir($dir,$access,$metadata) {
+        $azure = new AzureIO($this->config);
+        $this->assertTrue($azure->mkdir($dir,$access,$metadata));
+    }
+    /**
+     * @depends testMkdir
+     */
+    public function testCopyandScanDirDownload()  {
+        $azure = new AzureIO($this->config);
+        $this->assertTrue($azure->copy('test','skate.txt','tests/test.txt'));
+        $objects = $azure->scandir('test');
+        $this->assertGreaterThan(0, count($objects));
+        $this->assertTrue($azure->download('test','skate.txt','tests/destroy.txt'));
+        $this->assertTrue(file_exists('tests/destroy.txt'));
+        unlink('tests/destroy.txt');
+    }
+    /**
+     * @depends testCopyandScanDirDownload
+     */
+    public function testDownloadUrl(){
+        $azure = new AzureIO($this->config);
+        $this->assertTrue($azure->copy('test','snowboard.txt','tests/test.txt'));
+        $this->assertTrue($azure->copy('test','subdirectory/snowboard.txt','tests/test.txt'));
+        $this->assertTrue($azure->downloadUrl($this->config['azure']['base_url'].'/test/snowboard.txt', 'tests/snowboard.txt'));
+        $this->assertTrue($azure->downloadUrl($this->config['azure']['base_url'].'/test/subdirectory/snowboard.txt', 'tests/snowboard2.txt'));
+        $this->assertTrue(file_exists('tests/snowboard2.txt'));
+        $this->assertTrue(file_exists('tests/snowboard.txt'));
+        unlink('tests/snowboard2.txt');
+        unlink('tests/snowboard.txt');
+    }
+    /**
+     * @dataProvider mkdirProvider
+     */
+    public function testMkdirFail($dir,$access,$metadata) {
+        $azure = new AzureIO($this->config);
+        $this->assertFalse($azure->mkdir($dir,$access,$metadata));
+    }
+    /**
+     * @depends testCopyandScanDirDownload
+     */
+    public function testUnlink(){
+        $azure = new AzureIO($this->config);
+        $this->assertTrue($azure->copy('test','dick.txt','tests/test.txt'));
+        $this->assertTrue($azure->unlink('test', 'dick.txt'));
         
     }
     /**
-     * @dataProvider downloadCorrectProvider
+     * @dataProvider mkdirProvider
      */
-    public function testDownload($container,$file,$destination)  {
-        $this->assertTrue($this->azure->download($container,$file,$destination));
-        unlink($destination);
+    public function testRmdir($dir,$access,$metadata){
+        $azure = new AzureIO($this->config);
+        $this->assertTrue($azure->rmdir('test'));
+        $this->assertTrue($azure->rmdir('test2'));
+        $this->assertTrue($azure->rmdir('test3'));
+        
+        $this->assertFalse($azure->mkdir($dir,$access,$metadata));
+        
     }
     
-    
-    
-    public function downloadCorrectProvider(){
+    public function mkdirProvider() {
         return [
-            [
-                'pdf','ciao.pdf','rock.pdf'
-            ]
-        ];
-    }
-    
-    public function downloadWrongProvider(){
-        return [
-            [
-                'pdf','skate.pdf','isshit.pdf'
-            ]
+              ['test','cb',[]],
+              ['test2','b',[]],
+              ['test3','cb',['author'=>'Mauri']]
         ];
     }
 }
