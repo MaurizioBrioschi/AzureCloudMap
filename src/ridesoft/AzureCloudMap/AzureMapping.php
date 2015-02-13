@@ -29,7 +29,7 @@ abstract class AzureMapping {
      * @param string $destinationFilename
      * @return boolean
      */
-    protected function download($dir, $file, $destinationFilename) {
+    protected function getBlob($dir, $file, $destinationFilename) {
         try {
             // Get blob.
             $blob = $this->blobRestProxy->getBlob($dir, $file);

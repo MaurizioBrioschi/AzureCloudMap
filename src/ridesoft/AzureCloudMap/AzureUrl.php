@@ -45,7 +45,7 @@ class AzureUrl extends AzureMapping {
      * @throws \ridesoft\AzureCloudMap\Exception
      * @throws Exception
      */
-    protected function getBlob($url) {
+    protected function getBlobName($url) {
         try {
             $explosion = explode("/", $this->analizeUrl($url));
             $count_explosion = count($explosion);
@@ -72,13 +72,13 @@ class AzureUrl extends AzureMapping {
 
         try {
             $dir = $this->getContainer($url);
-            $file = $this->getBlob($url);
+            $file = $this->getBlobName($url);
         } catch (Exception $ex) {
             echo $ex->getMessage();
         }
 
         try {
-            return parent::download($dir, $file, $destinationFilename);
+            return parent::getBlob($dir, $file, $destinationFilename);
         } catch (ServiceException $e) {
             // Handle exception based on error codes and messages.
             // Error codes and messages are here: 

@@ -17,8 +17,8 @@ class AzureIO extends AzureMapping {
      * @param string $destinationFilename
      * @return boolean
      */
-    public function download($dir, $file, $destinationFilename){
-        return parent::download($dir, $file, $destinationFilename);
+    public function getBlob($dir, $file, $destinationFilename){
+        return parent::getBlob($dir, $file, $destinationFilename);
     }
     /**
      * List files and directories inside the specified container
