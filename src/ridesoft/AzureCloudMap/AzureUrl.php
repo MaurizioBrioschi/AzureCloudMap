@@ -7,7 +7,7 @@ namespace ridesoft\AzureCloudMap;
  *
  * @author maurizio brioschi <maurizio.brioschi@ridesoft.org>
  */
-class AzureUrl extends AzureIO {
+class AzureUrl extends AzureMapping {
     /**
      * Analize the url and get the relative path
      * @param type $url
