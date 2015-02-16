@@ -13,6 +13,10 @@ Add to your laravel application composer:
         "ridesoft/azurecloudmap": "0.4.*"
     },
 ```
+**Due to  microsoft/windowsazure dependency you must put your minimun stability to dev**
+```
+    "minimum-stability": "dev"
+```
 Type composer install or composer update.
 
 In your app/config/app.php add in array providers:
