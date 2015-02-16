@@ -61,16 +61,15 @@ class AzureIO extends AzureMapping {
      * @param type $dest_blob
      * @param type $local_dir
      */
-    public function CopyDir($dest_dir, $local_dir) {
+    public function copyDir($dest_dir, $local_dir) {
         if(is_dir($local_dir)){       
             $dir = explode('/', $local_dir);
             $this->createContainer($dest_dir.'/'.end($dir));
             $objects = scandir($local_dir);
             foreach($objects as $object){
                 if($object!='.' && $object!='..')   {
-                    echo "HI!!!: ".$object."\n";
                     if(is_dir($local_dir.'/'.$object)){                      
-                        $this->CopyDir($dest_dir.'/'.end($dir), $local_dir.'/'.$object);
+                        $this->copyDir($dest_dir.'/'.end($dir), $local_dir.'/'.$object);
                     }else{
                         $this->copy($dest_dir.'/'.end($dir), $object, $local_dir.'/'.$object);
                     }
