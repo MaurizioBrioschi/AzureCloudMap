@@ -20,6 +20,7 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
         $azure = new AzureIO($this->config);
         $this->assertTrue($azure->mkdir($dir,$access,$metadata));
     }
+    
     public function testCopyDir()   {
         $azure = new AzureIO($this->config);
         $this->assertTrue($azure->CopyDir('test', 'tests/copyDir'));
@@ -36,6 +37,16 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
         $this->assertTrue($azure->getBlob('test','skate.txt','tests/destroy.txt'));
         $this->assertTrue(file_exists('tests/destroy.txt'));
         unlink('tests/destroy.txt');
+    }
+    /**
+     * @depends testCopyandScanDirDownload
+     */
+    public function testRename()    {
+        $azure = new AzureIO($this->config);
+        $this->assertTrue($azure->rename('test/skate.txt', 'belfalu.txt'));
+        $this->assertTrue($azure->getBlob('test','belfalu.txt','tests/ziotom.txt'));
+        $this->assertTrue(file_exists('tests/ziotom.txt'));
+        unlink('tests/ziotom.txt');
     }
     
     /**

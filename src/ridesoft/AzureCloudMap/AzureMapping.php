@@ -82,12 +82,25 @@ abstract class AzureMapping {
      * @param string $destinationFilename
      * @return boolean
      */
-    protected function getBlob($dir, $file, $destinationFilename) {
+    protected function getBlob($dir, $file='', $destinationFilename=null) {
         try {
             
             // Get blob.
-            $blob = $this->blobRestProxy->getBlob($dir, $file);
+            $explosion = explode('/', $dir);
+            $count_explosion = count($explosion);
+            if(count($explosion)>0) {
+                $dir = $explosion[0];
+                $prefile = '';
+                for($i=1;$i<$count_explosion;$i++){
+                    $prefile .= $explosion[$i]."/";
+                }
+            }
+            $file =  $prefile.$file;
+            $blob = $this->blobRestProxy->getBlob($dir,$file);
             try{
+                if(is_null($destinationFilename)){
+                    $destinationFilename = $file;
+                }
                 file_put_contents($destinationFilename, stream_get_contents($blob->getContentStream()));
                 
             } catch (Exception $ex) {
@@ -191,7 +204,7 @@ abstract class AzureMapping {
         }
 
         try {
-            //Upload blob
+            //Upload blob    
             $this->blobRestProxy->createBlockBlob($dest_dir, $dest_blob, $content);
             return true;
         } catch (ServiceException $e) {
@@ -254,4 +267,6 @@ abstract class AzureMapping {
             return false;
         }
     }
+    
+   
 }
