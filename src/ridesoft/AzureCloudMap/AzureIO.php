@@ -56,6 +56,31 @@ class AzureIO extends AzureMapping {
         return parent::copyInBlob($dest_dir, $dest_blob, $local_file);
     }
     /**
+     * Copy recursively a directory into azure
+     * @param type $dest_dir
+     * @param type $dest_blob
+     * @param type $local_dir
+     */
+    public function CopyDir($dest_dir, $local_dir) {
+        if(is_dir($local_dir)){       
+            $dir = explode('/', $local_dir);
+            $this->createContainer($dest_dir.'/'.end($dir));
+            $objects = scandir($local_dir);
+            foreach($objects as $object){
+                if($object!='.' && $object!='..')   {
+                    echo "HI!!!: ".$object."\n";
+                    if(is_dir($local_dir.'/'.$object)){                      
+                        $this->CopyDir($dest_dir.'/'.end($dir), $local_dir.'/'.$object);
+                    }else{
+                        $this->copy($dest_dir.'/'.end($dir), $object, $local_dir.'/'.$object);
+                    }
+                }
+            }
+            return true;
+        }
+        throw new \Exception("The directory ($local_dir) to copy is not a directory.");
+    }
+    /**
      * create a container
      * @param type $dir name of container
      * @param type $access can be cb(CONTAINER_AND_BLOBS) or b (BLOBS_ONLY)

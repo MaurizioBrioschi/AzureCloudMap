@@ -183,7 +183,8 @@ abstract class AzureMapping {
      */
     protected function copyInBlob($dest_dir, $dest_blob, $local_file) {
         try {
-            $content = fopen($local_file, "r");
+             $content = fopen($local_file, "r");
+            
         } catch (Exception $ex) {
             echo $ex->getMessage();
             return false;

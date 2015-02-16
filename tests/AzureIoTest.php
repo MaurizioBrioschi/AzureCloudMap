@@ -20,6 +20,11 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
         $azure = new AzureIO($this->config);
         $this->assertTrue($azure->mkdir($dir,$access,$metadata));
     }
+    public function testCopyDir()   {
+        $azure = new AzureIO($this->config);
+        $this->assertTrue($azure->CopyDir('test', 'tests/copyDir'));
+    }
+    
     /**
      * @depends testMkdir
      */
@@ -49,6 +54,8 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
         $this->assertTrue($azure->unlink('test', 'dick.txt'));
         
     }
+    
+    
     /**
      * @dataProvider mkdirProvider
      */
@@ -61,6 +68,10 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
         $this->assertFalse($azure->mkdir($dir,$access,$metadata));
         
     }
+    
+    
+    
+    
     
     public function mkdirProvider() {
         return [
