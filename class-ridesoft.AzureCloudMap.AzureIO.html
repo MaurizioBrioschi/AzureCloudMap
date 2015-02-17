@@ -91,8 +91,7 @@
 
 
 	<div class="description">
-	<p>IO class for Microsoft Azure in PHP function
-works like path methods using container and blob</p>
+	<p>IO class for Microsoft Azure in IO php style functions</p>
 	</div>
 
 	<dl class="tree">
@@ -125,7 +124,7 @@ works like path methods using container and blob</p>
 
 				<b>Author:</b>
 				maurizio brioschi <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#111;&#58;&#x6d;&#x61;&#117;&#114;&#x69;&#x7a;&#105;&#111;&#x2e;&#x62;&#114;i&#x6f;&#115;&#99;h&#x69;&#64;&#114;&#x69;&#x64;&#101;&#115;&#x6f;&#x66;&#116;&#46;&#x6f;&#x72;&#103;">&#x6d;&#x61;&#117;&#114;&#x69;&#x7a;&#105;&#111;&#x2e;&#x62;&#114;i&#x6f;&#115;&#99;h&#x69;&#64;&#114;&#x69;&#x64;&#101;&#115;&#x6f;&#x66;&#116;&#46;&#x6f;&#x72;&#103;</a><br>
-			<b>Located at</b> <a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#5-146" title="Go to source code">ridesoft/AzureCloudMap/AzureIO.php</a>
+			<b>Located at</b> <a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#5-145" title="Go to source code">ridesoft/AzureCloudMap/AzureIO.php</a>
 		<br>
 	</div>
 
@@ -145,7 +144,7 @@ works like path methods using container and blob</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getBlob">#</a>
-		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#13-22" title="Go to source code">getBlob</a>( <span>string <var>$dir</var></span>, <span>string <var>$file</var></span>, <span>string <var>$destinationFilename</var></span> )</code>
+		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#12-21" title="Go to source code">getBlob</a>( <span>string <var>$dir</var></span>, <span>string <var>$file</var> = <span class="php-quote">''</span></span>, <span>string <var>$destinationFilename</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Download from the Azure cloud the blob in the container</p>
@@ -190,7 +189,7 @@ works like path methods using container and blob</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_scandir">#</a>
-		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#24-31" title="Go to source code">scandir</a>( <span>string <var>$dir</var></span> )</code>
+		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#23-30" title="Go to source code">scandir</a>( <span>string <var>$dir</var></span> )</code>
 
 		<div class="description short">
 			<p>List files and directories inside the specified container</p>
@@ -229,7 +228,7 @@ works like path methods using container and blob</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_unlink">#</a>
-		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#33-41" title="Go to source code">unlink</a>( <span>string <var>$dir</var></span>, <span>type <var>$file</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#32-40" title="Go to source code">unlink</a>( <span>string <var>$dir</var></span>, <span>type <var>$file</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Deletes a blob</p>
@@ -270,7 +269,7 @@ works like path methods using container and blob</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_rmdir">#</a>
-		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#43-50" title="Go to source code">rmdir</a>( <span>string <var>$dir</var></span> )</code>
+		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#42-49" title="Go to source code">rmdir</a>( <span>string <var>$dir</var></span> )</code>
 
 		<div class="description short">
 			<p>delete container</p>
@@ -309,7 +308,7 @@ works like path methods using container and blob</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_copy">#</a>
-		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#52-61" title="Go to source code">copy</a>( <span>type <var>$dest_dir</var></span>, <span>type <var>$dest_blob</var></span>, <span>type <var>$local_file</var></span> )</code>
+		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#51-60" title="Go to source code">copy</a>( <span>type <var>$dest_dir</var></span>, <span>type <var>$dest_blob</var></span>, <span>type <var>$local_file</var></span> )</code>
 
 		<div class="description short">
 			<p>Copy file</p>
@@ -352,7 +351,7 @@ works like path methods using container and blob</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_copyDir">#</a>
-		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#63-86" title="Go to source code">copyDir</a>( <span>type <var>$dest_dir</var></span>, <span>type <var>$local_dir</var></span>, <span>type <var>$local_dir</var>,…</span> )</code>
+		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#62-85" title="Go to source code">copyDir</a>( <span>type <var>$dest_dir</var></span>, <span>type <var>$local_dir</var></span>, <span>type <var>$local_dir</var>,…</span> )</code>
 
 		<div class="description short">
 			<p>Copy recursively a directory into azure</p>
@@ -391,7 +390,7 @@ works like path methods using container and blob</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_rename">#</a>
-		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#88-122" title="Go to source code">rename</a>( <span>type <var>$azure_blob</var></span>, <span>type <var>$new_label</var></span> )</code>
+		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#87-121" title="Go to source code">rename</a>( <span>type <var>$azure_blob</var></span>, <span>type <var>$new_label</var></span> )</code>
 
 		<div class="description short">
 			<p>rename a azure blob</p>
@@ -428,7 +427,7 @@ works like path methods using container and blob</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_mkdir">#</a>
-		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#124-144" title="Go to source code">mkdir</a>( <span>type <var>$dir</var></span>, <span>type <var>$access</var> = <span class="php-quote">'cb'</span></span>, <span>array <var>$metadata</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-ridesoft.AzureCloudMap.AzureIO.html#123-143" title="Go to source code">mkdir</a>( <span>type <var>$dir</var></span>, <span>type <var>$access</var> = <span class="php-quote">'cb'</span></span>, <span>array <var>$metadata</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			<p>create a container</p>
