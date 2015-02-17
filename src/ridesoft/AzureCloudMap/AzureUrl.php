@@ -109,6 +109,34 @@ class AzureUrl extends AzureMapping {
             $error_message = $e->getMessage();
             echo $code . ": " . $error_message . "<br />";
             return false;
+        } 
+    }
+    /**
+     * rename a blob url
+     * @param type $url
+     * @param type $newname, the name of the new blob
+     * @return boolean
+     */
+    public function renameBlob($url,$newname){
+        try {
+            $dir = $this->getContainer($url);
+            $file = $this->getBlobName($url);
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
+        
+        try {
+            mkdir('azure_tmp_url');
+            if (parent::getBlob($dir, $file, 'azure_tmp_url/' . $newname)) {
+                $this->delete($url);
+                $oldblobname = explode('/', $file);
+                $newUrl = str_replace(end($oldblobname), $newname, $url);
+                $this->addBlob($newUrl, 'azure_tmp_url/' . $newname);
+                exec('rm -rf azure_tmp_url');
+                return true;
+            }
+        } catch (ServiceException $ex) {
+            return false;
         }
     }
     /**

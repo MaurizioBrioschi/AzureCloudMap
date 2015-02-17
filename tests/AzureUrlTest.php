@@ -43,9 +43,19 @@ class AzureUrlTest extends PHPUnit_Framework_TestCase{
     /**
      * @depends testAddBlob
      */
+    public function testRename()    {
+        $azure = new AzureUrl($this->config);
+        $this->assertTrue($azure->renameBlob($this->config['azure']['base_url'].'/pizza/ciao.txt', 'flip360.txt'));
+        $this->assertTrue($azure->download($this->config['azure']['base_url'].'/pizza/flip360.txt', 'tests/stocazzo.txt'));
+        $this->assertTrue(file_exists('tests/stocazzo.txt'));
+        unlink('tests/stocazzo.txt');
+    }
+    /**
+     * @depends testRename
+     */
     public function testDeleteBlob()    {
         $azure = new AzureUrl($this->config);    
-        $this->assertTrue($azure->delete($this->config['azure']['base_url'].'/pizza/ciao.txt'));
+        $this->assertTrue($azure->delete($this->config['azure']['base_url'].'/pizza/flip360.txt'));
     }
     /**
      * @depends testAddContainer
