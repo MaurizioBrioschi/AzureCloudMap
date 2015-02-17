@@ -23,9 +23,6 @@ Add to your laravel application composer:
 
     ],
 ```
-```
-    "minimum-stability": "dev"
-```
 Type composer install or composer update.
 
 In your app/config/app.php add in array providers:
