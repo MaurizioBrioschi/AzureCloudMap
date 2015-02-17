@@ -13,7 +13,16 @@ Add to your laravel application composer:
         "ridesoft/azurecloudmap": "0.4.*"
     },
 ```
-**Due to  microsoft/windowsazure dependency you must put your minimun stability to dev**
+**Due to  microsoft/windowsazure dependency with pear you must put your composer.json**
+```
+"repositories": [
+        {
+            "type": "pear",
+            "url": "http://pear.php.net"
+        }
+
+    ],
+```
 ```
     "minimum-stability": "dev"
 ```
