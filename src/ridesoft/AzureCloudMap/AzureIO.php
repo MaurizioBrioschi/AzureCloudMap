@@ -11,6 +11,7 @@ class AzureIO extends AzureMapping {
 
     /**
      * Download from the Azure cloud the blob in the container
+     * @deprecated since version 0.4.3
      * @param string $dir is the container
      * @param string $file is the blob
      * @param string $destinationFilename
@@ -20,6 +21,9 @@ class AzureIO extends AzureMapping {
         return parent::getBlob($dir, $file, $destinationFilename);
     }
 
+    public function get($dir, $destinationFilename=null,$file=''){
+        return parent::getBlob($dir, $file, $destinationFilename);
+    }
     /**
      * List files and directories inside the specified container
      * @param string $dir the container

@@ -1,18 +1,22 @@
 <?php
+
 namespace ridesoft\AzureCloudMap;
 
 use WindowsAzure\Common\ServicesBuilder;
 use WindowsAzure\Common\ServiceException;
 use WindowsAzure\Blob\Models\CreateContainerOptions;
 use WindowsAzure\Blob\Models\PublicAccessType;
+
 /**
  * Base class for mapping Microsoft Azure Api
  *
  * @author maurizio brioschi <maurizio.brioschi@ridesoft.org>
  */
 abstract class AzureMapping {
+
     protected $config;
     protected $blobRestProxy;
+
     /**
      * 
      * @param @param  Illuminate\Config\Repository  $config
@@ -21,7 +25,7 @@ abstract class AzureMapping {
         $this->config = $config;
         $this->blobRestProxy = ServicesBuilder::getInstance()->createBlobService($config["azure"]["connectionstring"]);
     }
-    
+
     /**
      * Analize the url and get the relative path
      * @param type $url
@@ -34,6 +38,7 @@ abstract class AzureMapping {
         }
         return str_replace($this->config['azure']['base_url'] . "/", "", $url);
     }
+
     /**
      * get the container from the url
      * @param type $url
@@ -52,6 +57,7 @@ abstract class AzureMapping {
             throw $ex;
         }
     }
+
     /**
      * get the blob from the url
      * @param type $url
@@ -75,38 +81,46 @@ abstract class AzureMapping {
             throw $ex;
         }
     }
+
     /**
      * Download from the Azure cloud the blob in the container
+     * 
      * @param string $dir is the container
      * @param string $file is the blob
      * @param string $destinationFilename
      * @return boolean
      */
-    protected function getBlob($dir, $file, $destinationFilename) {
+    protected function getBlob($dir, $file = '', $destinationFilename = null) {
         try {
-            
+
             // Get blob.
             $explosion = explode('/', $dir);
             $count_explosion = count($explosion);
-            if(count($explosion)>0) {
+            if (count($explosion) > 0) {
                 $dir = $explosion[0];
                 $prefile = '';
-                for($i=1;$i<$count_explosion;$i++){
-                    $prefile .= $explosion[$i]."/";
+                for ($i = 1; $i < $count_explosion; $i++) {
+                    $prefile .= $explosion[$i] . "/";
                 }
             }
-            $file =  $prefile.$file;
-            $blob = $this->blobRestProxy->getBlob($dir,$file);
-            try{
-                if(is_null($destinationFilename)){
+            $file = $prefile . $file;
+
+            $blobs = $this->listContainer($dir);
+            if (in_array($file, $blobs)) {
+                $blob = $this->blobRestProxy->getBlob($dir, $file);
+            } else {
+                throw new \Exception('No blob ' . $file . ' in the container ' . $dir);
+            }
+
+            try {
+                if (is_null($destinationFilename)) {
                     $destinationFilename = $file;
                 }
                 file_put_contents($destinationFilename, stream_get_contents($blob->getContentStream()));
-                
             } catch (Exception $ex) {
                 throw $ex;
             }
-            
+
             return true;
         } catch (ServiceException $e) {
             // Handle exception based on error codes and messages.
@@ -118,7 +132,6 @@ abstract class AzureMapping {
             return false;
         }
     }
-    
 
     /**
      * List files and directories inside the specified container
@@ -127,11 +140,23 @@ abstract class AzureMapping {
      */
     protected function listContainer($dir) {
         try {
+            $path = explode('/', $dir);
+            $count_path = count($path);
+            if ($count_path > 0) {
+                $dir = $path[0];
+            }
+            $subdir = '';
+            for ($i = 1; $i < $count_path; $i++) {
+                $subdir .= $path[$i] . '/';
+            }
+            $subdir = substr($subdir, 0, strlen($subdir) - 1);
             $blob_list = $this->blobRestProxy->listBlobs($dir);
             $blobs = $blob_list->getBlobs();
             $objects = [];
             foreach ($blobs as $blob) {
-                array_push($objects, $blob);
+                if (strstr($blob->getName(), $subdir)!==false || strlen($subdir)==0) {
+                    array_push($objects, $blob->getName());
+                }
             }
             return $objects;
         } catch (Exception $ex) {
@@ -196,8 +221,7 @@ abstract class AzureMapping {
      */
     protected function copyInBlob($dest_dir, $dest_blob, $local_file) {
         try {
-             $content = fopen($local_file, "r");
-            
+            $content = fopen($local_file, "r");
         } catch (Exception $ex) {
             echo $ex->getMessage();
             return false;
@@ -267,6 +291,5 @@ abstract class AzureMapping {
             return false;
         }
     }
-    
-   
+
 }
