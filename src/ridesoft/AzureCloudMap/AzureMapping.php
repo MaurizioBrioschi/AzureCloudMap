@@ -103,13 +103,14 @@ abstract class AzureMapping {
                     $prefile .= $explosion[$i] . "/";
                 }
             }
+            $prefile = substr($prefile, 0,  strlen($prefile)-1);
             $file = $prefile . $file;
 
             $blobs = $this->listContainer($dir);
             if (in_array($file, $blobs)) {
                 $blob = $this->blobRestProxy->getBlob($dir, $file);
             } else {
-                throw new \Exception('No blob ' . $file . ' in the container ' . $dir);
+                throw new \Exception('No blob ' . $file . ' in the container ' . $dir.': '.  var_dump($blobs));
             }
 
             try {

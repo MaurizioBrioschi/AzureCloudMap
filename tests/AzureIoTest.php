@@ -37,9 +37,9 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
          $this->assertContains('copyDir/dir3/testDir3file1.txt',$objects);
          
          $objects2 = $azure->scandir('test/dir1');
-         $this->assertContains('dir2/testDir2file1.txt',$objects2);
-         $this->assertContains('testDir1file1.txt',$objects2);
-         $this->assertContains('testDir1file2.txt',$objects2);
+         $this->assertContains('copyDir/dir1/dir2/testDir2file1.txt',$objects2);
+         $this->assertContains('copyDir/dir1/testDir1file1.txt',$objects2);
+         $this->assertContains('copyDir/dir1/testDir1file2.txt',$objects2);
          $this->assertNotContains('copyDir/dir3/testDir3file1.txt', $objects2);
          
     }
@@ -70,7 +70,7 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
     public function testRename()    {
         $azure = new AzureIO($this->config);
         $this->assertTrue($azure->rename('test/skate.txt', 'belfalu.txt'));
-        $this->assertTrue($azure->get('test','belfalu.txt','tests/ziotom.txt'));
+        $this->assertTrue($azure->get('test/belfalu.txt','tests/ziotom.txt'));
         $this->assertTrue(file_exists('tests/ziotom.txt'));
         unlink('tests/ziotom.txt');
     }
