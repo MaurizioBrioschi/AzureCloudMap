@@ -25,6 +25,32 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
         $azure = new AzureIO($this->config);
         $this->assertTrue($azure->CopyDir('test', 'tests/copyDir'));
     }
+    /**
+     * @depends testCopyDir
+     */
+    public function testScandir()   {
+         $azure = new AzureIO($this->config);
+         $objects = $azure->scandir('test');
+         $this->assertContains('copyDir/dir1/dir2/testDir2file1.txt',$objects);
+         $this->assertContains('copyDir/dir1/testDir1file1.txt',$objects);
+         $this->assertContains('copyDir/dir1/testDir1file2.txt',$objects);
+         $this->assertContains('copyDir/dir3/testDir3file1.txt',$objects);
+         
+         $objects2 = $azure->scandir('test/dir1');
+         $this->assertContains('dir2/testDir2file1.txt',$objects2);
+         $this->assertContains('testDir1file1.txt',$objects2);
+         $this->assertContains('testDir1file2.txt',$objects2);
+         $this->assertNotContains('copyDir/dir3/testDir3file1.txt', $objects2);
+         
+    }
+    /**
+     * @depends testCopyDir
+     */
+//    public function testDownloadDir()   {
+//        $azure = new AzureIO($this->config);
+//        $this->assertTrue($azure->get('test/dir','testDir1file1.txt', 'tests/downloaddir'));
+//        die();
+//    }
     
     /**
      * @depends testMkdir
@@ -34,7 +60,7 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
         $this->assertTrue($azure->copy('test','skate.txt','tests/test.txt'));
         $objects = $azure->scandir('test');
         $this->assertGreaterThan(0, count($objects));
-        $this->assertTrue($azure->getBlob('test','skate.txt','tests/destroy.txt'));
+        $this->assertTrue($azure->get('test/skate.txt','tests/destroy.txt'));
         $this->assertTrue(file_exists('tests/destroy.txt'));
         unlink('tests/destroy.txt');
     }
@@ -44,7 +70,7 @@ class AzureIoTest extends PHPUnit_Framework_TestCase{
     public function testRename()    {
         $azure = new AzureIO($this->config);
         $this->assertTrue($azure->rename('test/skate.txt', 'belfalu.txt'));
-        $this->assertTrue($azure->getBlob('test','belfalu.txt','tests/ziotom.txt'));
+        $this->assertTrue($azure->get('test','belfalu.txt','tests/ziotom.txt'));
         $this->assertTrue(file_exists('tests/ziotom.txt'));
         unlink('tests/ziotom.txt');
     }
