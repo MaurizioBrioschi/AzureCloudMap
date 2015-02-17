@@ -82,7 +82,7 @@ abstract class AzureMapping {
      * @param string $destinationFilename
      * @return boolean
      */
-    protected function getBlob($dir, $file='', $destinationFilename=null) {
+    protected function getBlob($dir, $file, $destinationFilename) {
         try {
             
             // Get blob.

@@ -14,7 +14,7 @@ class AzureUrl extends AzureMapping {
      * @param type $destinationFilename
      * @return boolean
      */
-    public function download($url, $destinationFilename=null) {
+    public function download($url, $destinationFilename) {
 
         try {
             $dir = $this->getContainer($url);
