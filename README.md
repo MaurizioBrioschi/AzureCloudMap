@@ -3,6 +3,8 @@
 
 PHP Utility library to interface with Microsoft Azure Cloud API filesystem that works as in Laravel 4.2 as in pure php.
 
+Here [API](http://ridesoft.github.io/AzureCloudMap) 
+
 ## Use it in Laravel
 
 ### Install
@@ -58,13 +60,13 @@ or
 just download or clone this library
 
 ## Functions and API
-All function are documented in the Api, inside the folder API
+All function are documented in the [API](http://ridesoft.github.io/AzureCloudMap)
 
 ### Laravel
 
-For laravel run function from Ioc Container:
+For laravel run function from Ioc Container, using classes in the [API](http://ridesoft.github.io/AzureCloudMap)
 
-For function in filesystem style, in example:
+For functions in filesystem style, an example:
 ```
 AzureIO::scandir($dir);
 ```
