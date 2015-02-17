@@ -1,6 +1,6 @@
 {
     "name": "ridesoft/azurecloudmap",
-    "description": "PHP Utility library to interface with Microsoft Azure Cloud API filesystem that works as in Laravel 4.2 as in pure php.",
+    "description": "PHP Utility library to interface with Microsoft Windows Azure Cloud API filesystem that works as in Laravel 4.2 as in pure php.",
     "keywords": ["php", "laravel","microsoft","azure cloud"],
     "license": "MIT",
     "authors": [
