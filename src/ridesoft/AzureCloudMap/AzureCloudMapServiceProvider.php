@@ -5,7 +5,9 @@ namespace ridesoft\AzureCloudMap;
 use Illuminate\Support\ServiceProvider;
 use ridesoft\AzureCloudMap\AzureIO;
 use Config;
-
+/**
+ * Service provider for Laravel 4.2
+ */
 class AzureCloudMapServiceProvider extends ServiceProvider {
 
     /**

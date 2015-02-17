@@ -3,8 +3,7 @@
 namespace ridesoft\AzureCloudMap;
 
 /**
- * IO class for Microsoft Azure in PHP function 
- * works like path methods using container and blob
+ * IO class for Microsoft Azure in IO php style functions
  *
  * @author maurizio brioschi <maurizio.brioschi@ridesoft.org>
  */
