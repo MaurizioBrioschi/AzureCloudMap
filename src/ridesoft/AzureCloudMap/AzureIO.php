@@ -17,7 +17,7 @@ class AzureIO extends AzureMapping {
      * @param string $destinationFilename
      * @return boolean
      */
-    public function getBlob($dir, $file, $destinationFilename) {
+    public function getBlob($dir, $file='', $destinationFilename=null) {
         return parent::getBlob($dir, $file, $destinationFilename);
     }
 
