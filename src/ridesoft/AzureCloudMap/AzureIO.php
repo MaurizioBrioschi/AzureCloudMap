@@ -20,9 +20,14 @@ class AzureIO extends AzureMapping {
     public function getBlob($dir, $file='', $destinationFilename=null) {
         return parent::getBlob($dir, $file, $destinationFilename);
     }
-
-    public function get($dir, $destinationFilename=null,$file=''){
-        return parent::getBlob($dir, $file, $destinationFilename);
+    /**
+     * Download from the Azure cloud the blob in the container
+     * @param string $destinationFilename
+     * @param string $path is the container
+     * @return boolean
+     */
+    public function get($path, $destinationFilename=null){
+        return parent::getBlob($path, '', $destinationFilename);
     }
     /**
      * List files and directories inside the specified container
