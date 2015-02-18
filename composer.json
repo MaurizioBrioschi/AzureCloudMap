@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "illuminate/support": "4.2.*",
+        "illuminate/support": "4.2.9",
         "microsoft/windowsazure": "0.4.0"
     },
     "require-dev": {
