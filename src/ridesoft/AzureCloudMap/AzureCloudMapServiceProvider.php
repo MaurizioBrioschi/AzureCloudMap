@@ -24,7 +24,7 @@ class AzureCloudMapServiceProvider extends ServiceProvider {
      */
     public function boot() {
         $this->package('ridesoft/AzureCloudMap', 'azurecloudmap');
-        $this->publishes([__DIR__.'/../../config/config.php' => config_path('courier.php'),]);
+        
     }
 
     /**
